@@ -3,7 +3,7 @@
 
 # # Data Challenge : Historical consumption regression for electricity supply pricing
 
-# # This model helps the pre-processing automation of our data set. # It includes all the function needed for dealing
+# # This module helps the pre-processing automation of our data set. It includes all the function needed to deal
 # with missing values, adding features, normalisation and handling data type.
 
 # # # Importing
@@ -20,8 +20,8 @@ from .util import need
 class Data:
     '''
     The aim of this class is to help applying different preprocessing function to our dataset.
-    we begin by cleaning our data set by removing useless features then we add more features.
-    The last two methods splits  the data of the two sites.
+    we begin by cleaning our data set, removing useless features then adding more features.
+    The last two methods splits the data for the lwo locations.
     '''
 
     def __init__(self, data_train, data_test, y_data):
@@ -43,11 +43,11 @@ class Data:
                                               "loc_secondary_2",
                                               "loc_secondary_3"],
                                              axis=1)
-        # add is holiday feature
+        # add is holiday feature 
         need.is_holiday(self.data_train)
         need.is_holiday(self.data_test)
 
-        # convert timestamp to index
+        # convert to timestamp 
         self.data_train.timestamp = pd.to_datetime(self.data_train.timestamp)
         self.data_test.timestamp = pd.to_datetime(self.data_test.timestamp)
 
@@ -63,7 +63,7 @@ class Data:
         need.is_weekend(self.data_train)
         need.is_weekend(self.data_test)
 
-        # add smoothing temp and humidity
+        # add smoothing for temp and humidity
         self.data_train['temp_1_smooth7D'] = self.data_train['temp_1'].interpolate().rolling(24 * 7).mean().fillna(
             method='bfill').round(decimals=1)
         self.data_train['temp_2_smooth7D'] = self.data_train['temp_2'].interpolate().rolling(24 * 7).mean().fillna(
@@ -82,7 +82,7 @@ class Data:
         self.data_test['humidity_2_smooth7D'] = self.data_test['humidity_2'].interpolate().rolling(
             24 * 7).mean().fillna(method='bfill').round()
 
-        # Normalising our data
+        # Normalising data
         scaler = MinMaxScaler()
         self.data_train[['temp_1', 'temp_2',
                          'mean_national_temp',

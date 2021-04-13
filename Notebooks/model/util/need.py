@@ -2,7 +2,7 @@
 # coding: utf-8
 
 # In[1]:
-#  The useful functions used to solve the prediction problem of the Data Challenge
+#  Some useful functions to add features and help the preprecessing step 
 
 import holidays
 
@@ -21,7 +21,7 @@ def time_features(df):
 
 
 def is_holiday(df):
-    ''' This function create holiday features and add them to the DataFrame.
+    ''' This function create holiday features and add it to the DataFrame.
     if the input is a holiday day it returns 1 else it returns 0'''
 
     fr_holidays = holidays.France()
@@ -30,7 +30,7 @@ def is_holiday(df):
 
 def is_weekend(df):
     
-    ''' This function create weekend features and add them to the DataFrame.
+    ''' This function create weekend features and it them to the DataFrame.
         if the input is a weekend day it returns 1 else it returns 0'''
 
     df['isWeekend'] = df['dayofweek'].apply(lambda x: 1 if x in [5, 6] else 0)
